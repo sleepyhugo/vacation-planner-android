@@ -33,5 +33,6 @@ public static int numAlert;
                 Intent intent = new Intent(MainActivity.this, VacationList.class);
                 startActivity(intent);
         });
+        setTitle("Vacation Planner");
     }
 }

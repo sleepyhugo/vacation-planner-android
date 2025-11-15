@@ -90,6 +90,7 @@ public class VacationDetails extends AppCompatActivity {
         // Displays excursions associated with this vacation
         excursionRecycler = findViewById(R.id.excursionrecyclerview);
         textEmptyExcursions = findViewById(R.id.textEmptyExcursions);
+
         excursionAdapter  = new ExcursionAdapter(this);
         excursionRecycler.setAdapter(excursionAdapter);
         excursionRecycler.setLayoutManager(new LinearLayoutManager(this));
