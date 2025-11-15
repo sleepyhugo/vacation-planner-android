@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Save -->
+    <item android:title="Save Excursion"
+        android:id="@+id/excursionsave"/>
+
+    <!-- Set alert that fires on excursion date with the excursion title -->
+    <item
+        android:id="@+id/excursion_alert"
+        android:title="Set Excursion Alert"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <!-- Delete -->
+    <item
+        android:id="@+id/excursiondelete"
+        android:title="Delete Excursion"
+        app:showAsAction="never" />
+</menu>

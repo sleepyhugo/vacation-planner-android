@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="?android:attr/selectableItemBackground">
+    <!-- Defines how each vacation appears in the list, showing title, hotel, dates, and price.
+     Used by VacationAdapter to display vacation details in the RecyclerView. -->
+
+    <!-- Vacation title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Vacation Title" />
+
+    <!-- Hotel -->
+    <TextView
+        android:id="@+id/tvHotel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hotel" />
+
+    <!-- Start - End Date -->
+    <TextView
+        android:id="@+id/tvDates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MM/DD/YYYY – MM/DD/YYYY" />
+
+    <TextView
+        android:id="@+id/rowPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#666"
+        android:paddingTop="2dp"/>
+
+</LinearLayout>

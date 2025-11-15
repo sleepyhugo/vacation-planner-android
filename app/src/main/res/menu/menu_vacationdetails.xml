@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Save Vacation"
+        android:id="@+id/vacationsave"/>
+    <item android:title="Delete Vacation"
+        android:id="@+id/vacationdelete"/>
+    <!-- Actions to set alerts on start/end dates -->
+    <item
+        android:id="@+id/vacation_alert_start"
+        android:title="Alert: Start Date"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/vacation_alert_end"
+        android:title="Alert: End Date"
+        app:showAsAction="never" />
+
+    <!-- Share Vacation -->
+    <item
+        android:id="@+id/vacation_share"
+        android:title="Share Vacation"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
