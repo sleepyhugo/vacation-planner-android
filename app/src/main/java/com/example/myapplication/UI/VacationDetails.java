@@ -35,6 +35,7 @@ public class VacationDetails extends AppCompatActivity {
     EditText editHotel;
     EditText editStartDate;
     EditText editEndDate;
+    EditText editPrice;
     Repository repository;
     Vacation currentVacation;
     int numExcursions;
@@ -63,6 +64,7 @@ public class VacationDetails extends AppCompatActivity {
 
         editName = findViewById(R.id.titletext);
         editHotel = findViewById(R.id.hoteltext);
+        editPrice = findViewById(R.id.pricetext);
         editStartDate = findViewById(R.id.startdatetext);
         editEndDate = findViewById(R.id.enddatetext);
 
@@ -79,6 +81,11 @@ public class VacationDetails extends AppCompatActivity {
         if (hotelExtra != null)     editHotel.setText(hotelExtra);
         if (startDateExtra != null) editStartDate.setText(startDateExtra);
         if (endDateExtra != null)   editEndDate.setText(endDateExtra);
+
+        double priceExtra = getIntent().getDoubleExtra("price", -1.0);
+        if (priceExtra >= 0) {
+            editPrice.setText(String.valueOf(priceExtra));
+        }
 
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
@@ -110,6 +117,20 @@ public class VacationDetails extends AppCompatActivity {
             String hotelText    = editHotel.getText().toString().trim();
             String startDate    = editStartDate.getText().toString().trim();
             String endDate      = editEndDate.getText().toString().trim();
+            String priceText = editPrice.getText().toString().trim();
+
+            // Parse price
+            Double price = null;
+            if (!priceText.isEmpty()) {
+                try {
+                    price = Double.parseDouble(priceText);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this,
+                            "Enter a valid price (numbers only).",
+                            Toast.LENGTH_LONG).show();
+                    return true; // stop save
+                }
+            }
 
             // Validate date format (MM/DD/YYYY) strictly
             if (!isValidDate(startDate) || !isValidDate(endDate)) {
@@ -148,7 +169,8 @@ public class VacationDetails extends AppCompatActivity {
                         nameText,
                         hotelText,
                         startDate,
-                        endDate
+                        endDate,
+                        price
                 );
                 repository.insert(vacation);
                 finish();
@@ -159,7 +181,8 @@ public class VacationDetails extends AppCompatActivity {
                         nameText,
                         hotelText,
                         startDate,
-                        endDate
+                        endDate,
+                        price
                 );
                 repository.update(vacation);
                 finish();
@@ -371,12 +394,14 @@ public class VacationDetails extends AppCompatActivity {
         String hotelText = editHotel.getText().toString().trim();
         String startDate = editStartDate.getText().toString().trim();
         String endDate   = editEndDate.getText().toString().trim();
+        String priceText = editPrice.getText().toString().trim();
 
         StringBuilder sb = new StringBuilder();
         sb.append("Vacation: ").append(titleText.isEmpty() ? "Untitled" : titleText).append("\n");
         if (!hotelText.isEmpty()) sb.append("Hotel: ").append(hotelText).append("\n");
         if (!startDate.isEmpty()) sb.append("Start: ").append(startDate).append("\n");
         if (!endDate.isEmpty())   sb.append("End: ").append(endDate).append("\n");
+        if (!priceText.isEmpty()) sb.append("Price: $").append(priceText).append("\n");
         return sb.toString();
     }
     @Override

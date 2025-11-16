@@ -74,12 +74,29 @@ public class VacationList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.mysample) {
-            repository.insert(new com.example.myapplication.entities.Vacation(
-                    0, "Bermuda Trip", "Coral Beach Hotel", "01/10/2026", "01/15/2026"));
-            repository.insert(new com.example.myapplication.entities.Vacation(
-                    0, "Spring Break", "Sunset Resort", "03/20/2026", "03/25/2026"));
-            repository.insert(new com.example.myapplication.entities.Vacation(
-                    0, "London Trip", "The Royal Inn", "06/05/2026", "06/12/2026"));
+            Vacation v1 = new Vacation();
+            v1.setVacationName("Bermuda Trip");
+            v1.setHotel("Coral Beach Hotel");
+            v1.setStartDate("01/10/2026");
+            v1.setEndDate("01/15/2026");
+            v1.setPrice(2500.00);
+            repository.insert(v1);
+
+            Vacation v2 = new Vacation();
+            v2.setVacationName("Spring Break");
+            v2.setHotel("Sunset Resort");
+            v2.setStartDate("03/20/2026");
+            v2.setEndDate("03/25/2026");
+            v2.setPrice(1800.00);
+            repository.insert(v2);
+
+            Vacation v3 = new Vacation();
+            v3.setVacationName("London Trip");
+            v3.setHotel("The Royal Inn");
+            v3.setStartDate("06/05/2026");
+            v3.setEndDate("06/12/2026");
+            v3.setPrice(3200.00);
+            repository.insert(v3);
             loadVacationsIntoList();
             return true;
         }

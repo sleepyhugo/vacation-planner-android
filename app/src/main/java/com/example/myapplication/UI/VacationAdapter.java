@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.entities.Vacation;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +33,7 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         private final TextView tvTitle;
         private final TextView tvHotel;
         private final TextView tvDates;
+        private final TextView rowPrice;
 
 
         public VacationViewHolder(@NonNull View itemView) {
@@ -39,6 +42,7 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvHotel = itemView.findViewById(R.id.tvHotel);
             tvDates = itemView.findViewById(R.id.tvDates);
+            rowPrice = itemView.findViewById(R.id.rowPrice);
 
             // Click opens VacationDetails for that vacation
             itemView.setOnClickListener(view -> {
@@ -53,6 +57,10 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
                     intent.putExtra("hotel", current.getHotel());
                     intent.putExtra("startDate", current.getStartDate());
                     intent.putExtra("endDate", current.getEndDate());
+
+                    if (current.getPrice() != null) {
+                        intent.putExtra("price", current.getPrice());
+                    }
 
                     context.startActivity(intent);
                 }
@@ -72,19 +80,28 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
     public void onBindViewHolder(@NonNull VacationAdapter.VacationViewHolder holder, int position) {
         if (mVacations != null && !mVacations.isEmpty()) {
             Vacation current = mVacations.get(position);
+
             holder.tvTitle.setText(current.getVacationName());
-            NumberFormat money = NumberFormat.getCurrencyInstance(Locale.US);
-            String hotelName = (current.getHotel() != null && !current.getHotel().trim().isEmpty()) ? current.getHotel() : "—";
+
+            String hotelName = (current.getHotel() != null && !current.getHotel().trim().isEmpty()) ? current.getHotel(): "—"; holder.tvHotel.setText(hotelName);
+
             String start = current.getStartDate() != null ? current.getStartDate() : "";
             String end   = current.getEndDate()   != null ? current.getEndDate()   : "";
             holder.tvDates.setText(start + " - " + end);
-            holder.tvTitle.setText(current.getVacationName());
-            holder.tvHotel.setText(current.getHotel());
-            holder.tvDates.setText(current.getStartDate() + " - " + current.getEndDate());
+
+            // NEW: format and show price
+            Double price = current.getPrice();
+            if (price != null) {
+                java.text.NumberFormat money = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.US);
+                holder.rowPrice.setText(money.format(price));
+            } else {
+                holder.rowPrice.setText("");
+            }
         } else {
             holder.tvTitle.setText("No vacations available");
             holder.tvHotel.setText("");
             holder.tvDates.setText("");
+            holder.rowPrice.setText("");
         }
     }
 

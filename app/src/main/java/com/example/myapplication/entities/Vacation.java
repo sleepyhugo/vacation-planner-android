@@ -22,15 +22,19 @@ public class Vacation {
     @ColumnInfo(name = "endDate")
     private String endDate;
 
-    public Vacation() {}
+    @ColumnInfo(name = "price")
+    private Double price;
+
+    public Vacation() { }
 
     @Ignore
-    public Vacation(int vacationID, String vacationName, String hotel, String startDate, String endDate) {
+    public Vacation(int vacationID, String vacationName, String hotel, String startDate, String endDate, Double price) {
         this.vacationID = vacationID;
         this.vacationName = vacationName;
         this.hotel = hotel;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.price = price;
     }
 
     public int getVacationID() { return vacationID; }
@@ -47,4 +51,7 @@ public class Vacation {
 
     public String getEndDate() { return endDate; }
     public void setEndDate(String endDate) { this.endDate = endDate; }
+
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
 }

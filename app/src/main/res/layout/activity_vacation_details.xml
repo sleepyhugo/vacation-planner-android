@@ -66,6 +66,28 @@
                     android:inputType="textPersonName" />
             </LinearLayout>
 
+            <!-- Price -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:text="Price:" />
+
+                <EditText
+                    android:id="@+id/pricetext"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:hint="Total price"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
             <!-- Start Date -->
             <LinearLayout
                 android:layout_width="match_parent"
