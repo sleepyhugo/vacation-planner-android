@@ -25,11 +25,13 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
     class ExcursionViewHolder extends RecyclerView.ViewHolder {
         TextView titleView;
         TextView dateView;
+        TextView priceView;
 
         private ExcursionViewHolder(View itemView) {
             super(itemView);
             titleView = itemView.findViewById(R.id.textExcursionTitle);
             dateView  = itemView.findViewById(R.id.textExcursionDate);
+            priceView = itemView.findViewById(R.id.textExcursionPrice);
 
             itemView.setOnClickListener(view -> {
                 int position = getAdapterPosition();
@@ -39,6 +41,11 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                 intent.putExtra("name", current.getExcursionName());
                 intent.putExtra("vacationID", current.getVacationID());
                 intent.putExtra("date", current.getExcursionDate());
+
+                if (current.getPrice() != null) {
+                    intent.putExtra("price", current.getPrice());
+                }
+
                 context.startActivity(intent);
             });
         }
@@ -61,9 +68,19 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                 holder.titleView.setText(ex.getExcursionName());
                 String d = ex.getExcursionDate();
                 holder.dateView.setText((d == null || d.trim().isEmpty()) ? "—" : d);
+
+                Double price = ex.getPrice();
+                if (price != null) {
+                    java.text.NumberFormat money = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.US);
+                    holder.priceView.setText(money.format(price));
+                } else {
+                    holder.priceView.setText("");
+                }
+
             } else {
                 holder.titleView.setText("No excursions found");
                 holder.dateView.setText("");
+                holder.priceView.setText("");
             }
         }
         public void setExcursion(List<Excursion> excursion){

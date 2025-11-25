@@ -1,5 +1,6 @@
 package com.example.myapplication.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -11,10 +12,13 @@ public class Excursion {
     private int vacationID;
     private String excursionDate;
 
-    public Excursion(int excursionID, String excursionName, int vacationID) {
+    private Double price;
+
+    public Excursion(int excursionID, String excursionName, int vacationID, Double price) {
         this.excursionID = excursionID;
         this.excursionName = excursionName;
         this.vacationID = vacationID;
+        this.price = price;
     }
 
     public int getExcursionID() {
@@ -45,5 +49,13 @@ public class Excursion {
     }
     public void setExcursionDate(String excursionDate) {
         this.excursionDate = excursionDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

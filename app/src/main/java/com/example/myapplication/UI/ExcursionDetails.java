@@ -39,6 +39,7 @@ public class ExcursionDetails extends AppCompatActivity {
     int excursionID;
     int vacationID;
     EditText editName;
+    EditText editPrice;
     TextView editDate;
     DatePickerDialog.OnDateSetListener datePickerListener;
     final Calendar cal = Calendar.getInstance();
@@ -72,6 +73,8 @@ public class ExcursionDetails extends AppCompatActivity {
         excursionID = getIntent().getIntExtra("id", -1);
         vacationID = getIntent().getIntExtra("vacationID", -1);
 
+        editPrice = findViewById(R.id.excursionPrice);
+
         editDate = findViewById(R.id.excursionDate);
 
         // DatePicker that writes MM/dd/yyyy into editDate
@@ -94,6 +97,11 @@ public class ExcursionDetails extends AppCompatActivity {
         // Read incoming values (make sure you read "id" the same key you sent from adapter)
         excursionID = getIntent().getIntExtra("id", -1);
         String incomingDate = getIntent().getStringExtra("date");
+
+        double priceExtra = getIntent().getDoubleExtra("price", -1.0);
+        if (priceExtra >= 0) {
+            editPrice.setText(String.valueOf(priceExtra));
+        }
 
         // If the date was passed in the Intent, show it.
         // Otherwise, if we have an ID, load from the Repository as a fallback.
@@ -209,6 +217,19 @@ public class ExcursionDetails extends AppCompatActivity {
         if (item.getItemId() == R.id.excursionsave) {
             String title = editName.getText().toString().trim();
             String date  = editDate.getText().toString().trim();
+            String priceText = editPrice.getText().toString().trim();
+
+            // Parse price
+            Double price = null;
+            if (!priceText.isEmpty()) {
+                try {
+                    price = Double.parseDouble(priceText);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this,
+                            "Enter a valid excursion price (numbers only).", Toast.LENGTH_LONG).show();
+                    return true; // stop save
+                }
+            }
 
             // Ensure excursion date is within its parent vacation range
             Vacation parent = repository.getVacationById(vacationID);
@@ -247,8 +268,16 @@ public class ExcursionDetails extends AppCompatActivity {
             }
 
             // create object (constructor doesn’t take date), then set date
-            Excursion excursion = new Excursion((excursionID == -1 ? repository.nextExcursionId() : excursionID), title, vacationID);
-            excursion.setExcursionDate(date); // 👈 B4: persist the date (use setExcursionDate(...) if that’s your field name)
+            int idToUse = (excursionID == -1 ? repository.nextExcursionId() : excursionID);
+            Excursion excursion = new Excursion(idToUse, title, vacationID, price);
+            excursion.setExcursionDate(date);
+
+            // Save to database
+            if (excursionID == -1) {
+                repository.insert(excursion);
+            } else {
+                repository.update(excursion);
+            }
 
             if (excursionID == -1) {
                 excursionID = excursion.getExcursionID();
